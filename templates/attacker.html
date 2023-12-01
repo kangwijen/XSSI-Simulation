@@ -12,23 +12,31 @@
         <p class="lead">This page demonstrates data leakage through global variables.</p>
     </div>
 
+    <script>
+        function reloadPage(){
+            location.reload();
+        }
+    </script>
+
     <script src="static/cookie-script.js"></script>
 
     <div id="result" class="mt-3">
         <h2 class="text-center">Leaked Data</h2>
-        <div class="alert alert-success text-center" role="alert">
+        <div class="d-flex alert alert-success text-center align-items-center justify-content-around" role="alert">
             Your secret cookie: <b id="cookieValue"></b>
+            <script>
+                var div = document.getElementById("cookieValue");
+                div.innerHTML = window.cookieValue;
+            </script>
+            <button class="btn btn-success" onclick="reloadPage()">Reload This Page</button>
         </div>
     </div>
 
-    <script>
-        var div = document.getElementById("cookieValue");
-        div.innerHTML = window.cookieValue;
-    </script>
 
     <div class="mt-3">
         <h2 class="text-center">Explanation</h2>
-        <p>This page illustrates a scenario where sensitive data is leaked through the use of global variables. The page you visited earlier generated a random cookie and stored it in a global variable accessible by JavaScript. Here, an attacker's page attempts to exploit this by accessing the global variable and displaying the leaked data. You can try generating a new cookie on the previous page and this page will display the updated leaked cookie.</p>
+        <p>This page illustrates a scenario where sensitive data is leaked through the use of global variables. The page you visited earlier generated a random cookie and stored it in a global variable accessible by JavaScript. Here, an attacker's page attempts to exploit this by accessing the global variable and displaying the leaked data. You can try generating a new cookie on the previous page. Refresh this page and this page will display the updated leaked cookie.</p>
+        <iframe src="static/stuff.js" width="100%" height="250"></iframe>
         <p>In the real world, the attacker page would of course be a different website on a different domain. User might get tricked to enter the attacker page and the attack then would occur. To prevent this attack, there're a few things to keep in mind:</p>
         <ul>
             <li>You should never store sensitive data in global JavaScript variables, function parameters, and more.</li>
